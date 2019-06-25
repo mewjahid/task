@@ -10,7 +10,7 @@
 			$result = $db->prepare($sql);
 			$result->bindParam(':name', $name, PDO::PARAM_STR);
 			$result->bindParam(':email', $email, PDO::PARAM_STR);
-			$result->bindParam(':password', md5($password), PDO::PARAM_STR);
+			$result->bindParam(':password', $password, PDO::PARAM_STR);
 
 			return $result->execute();
 		}

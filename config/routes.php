@@ -2,7 +2,7 @@
 	return [
         ''              => 'main/index',
 		'admin/edit'    => 'admin/edit',
-		'admin/page'    => 'admin/index',
+		'admin/delete'    => 'admin/delete',
 		'admin'         => 'admin/index',
 		'user/register' => 'user/register',
 		'user/login'    => 'user/login',

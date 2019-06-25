@@ -2,7 +2,7 @@
 
     return array(
         'host' => 'localhost',
-        'dbname' => '',
-        'user' => '',
-        'password' => '',
+        'dbname' => 'm92835s1_app',
+        'user' => 'm92835s1_app',
+        'password' => 'cIum2kZI',
     );

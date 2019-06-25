@@ -18,52 +18,22 @@
 		public function actionIndex ()
 		{
             $this->beforeAction();
+			
+			$page = isset($_GET['page']) ? $_GET['page'] : 1;
+			$columnToSort = isset($_GET['columnToSort']) ? $_GET['columnToSort'] : null;
+			$sortOrder = isset($_GET['sortOrder']) ? $_GET['sortOrder'] : null;
 
 			$userId = User::checkLogged();
 			$user = User::getUserById($userId);
 
-			if (isset($_POST[ 'submit' ]))
-			{
-				if ($userId == null)
-				{
-					$name = 'Гость';
-					$email = '---';
-					$text = $_POST[ 'text' ];
-					$errors = false;
+			$total = Main::getTotalTasks();
 
-					if (!Main::checkPost($text))
-					{
-						$errors[] = 'Поле не может быть пустым';
-					}
+			$pagination = new Pagination($total, $page, Main::SHOW_BY_DEFAULT, [
+				'columnToSort' => $columnToSort,
+				'sortOrder' => $sortOrder,
+			]);
 
-					if ($errors == false)
-					{
-						Main::setPost($name, $email, $text);
-						header('Location: /');
-					}
-				}
-				else
-				{
-
-					$name = $user[ 'name' ];
-					$email = $user[ 'email' ];
-					$text = $_POST[ 'text' ];
-
-					$errors = false;
-
-					if (!Main::checkPost($text))
-					{
-						$errors[] = 'Поле не может быть пустым';
-					}
-
-					if ($errors == false)
-					{
-						Main::setPost($name, $email, $text);
-						header('Location: /');
-					}
-				}
-			}
-			$taskList = Main::getTaskList();
+			$taskList = Main::getPost($page, $columnToSort, $sortOrder);
 
 			require_once( ROOT . '/views/admin.php' );
 
@@ -117,6 +87,24 @@
                 }
 
             }
+		}
+
+		public function actionDelete()
+		{
+			$this->beforeAction();
+
+			$id = isset($_GET['id']) ? $_GET['id'] : null;
+
+			if ($id === null)
+			{
+				http_response_code(404);
+				exit();
+			}
+
+			Admin::deleteTask($id);
+
+			header("Location: /admin");
+
 		}
 
 	}

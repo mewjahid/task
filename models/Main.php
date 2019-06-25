@@ -16,6 +16,7 @@
 
 		const COLUMNS_TO_SORT = ['name', 'email', 'text', 'status'];
 
+		
 		public static function getTaskList ()
 		{
 
